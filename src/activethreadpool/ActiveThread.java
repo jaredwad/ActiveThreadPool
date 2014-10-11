@@ -13,17 +13,15 @@ import java.util.Queue;
  *
  * @author Jared
  */
-public class ActiveThreadPool {
-
-   ActiveThreadPool(){
+public class ActiveThread extends Thread{
+   
+   ActiveThread() {
       queue = new LinkedList<Action>();
    }
    
-   /**
-    * @param args the command line arguments
-    */
-   public static void main(String[] args) {
-      // TODO code application logic here
+   @Override
+   public void run(){
+      
    }
    
    private Queue queue;
