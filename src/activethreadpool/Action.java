@@ -26,7 +26,6 @@ public class Action{
       runnable.run();
       if(callback != null)
          callback.run();
-      
    }
    
    Runnable runnable;

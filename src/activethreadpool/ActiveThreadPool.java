@@ -16,7 +16,31 @@ import java.util.Queue;
 public class ActiveThreadPool {
 
    ActiveThreadPool(){
+      absorbSize = 10;
       queue = new LinkedList<Action>();
+      numThreads = Runtime.getRuntime().availableProcessors();
+   }
+   
+   ActiveThreadPool(int pAbsorbSize){
+      absorbSize = pAbsorbSize;
+      queue = new LinkedList<Action>();
+      numThreads = Runtime.getRuntime().availableProcessors();
+   }
+
+   private static synchronized Queue getQueue(int size) {
+      Queue newQueue = new LinkedList<Action>();
+      for(int i = 0; i < size; ++i){
+         newQueue.add(queue.poll());
+      }
+      return newQueue;
+   }
+
+   public static synchronized Queue retreiveFromQueue() {
+      if(queue.size() <= absorbSize)
+         return getQueue(queue.size());
+      
+      else
+         return getQueue(queue.size() / numThreads);
    }
    
    /**
@@ -26,6 +50,8 @@ public class ActiveThreadPool {
       // TODO code application logic here
    }
    
-   private Queue queue;
+   private static int absorbSize;
+   private static int numThreads;
+   private static Queue queue;
    
 }
